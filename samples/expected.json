@@ -1,0 +1,17 @@
+{
+  "old": {
+    "receipt": {
+      "day": "2025-04-09", "counter_revision": "c1", "route_revision": "r1",
+      "line_total": 2, "pool_total": 2
+    },
+    "bounds": {"single": [0, 1], "into_x": [1, 1], "diagonal": [0, 2]}
+  },
+  "new": {
+    "receipt": {
+      "day": "2025-04-09", "counter_revision": "c2", "route_revision": "r2",
+      "line_total": 3, "pool_total": 3
+    },
+    "bounds": {"single": [2, 2], "into_x": [2, 2], "diagonal": [3, 3]}
+  },
+  "oracle": "旧日批有且只有两种一升配对，X 在两种配对中均收 1 升，所选对角线分别承接 0 升及 2 升。新日批只开放对角路线，A 至 X 承接 2 升、B 至 Y 承接 1 升。"
+}

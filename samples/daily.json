@@ -1,0 +1,24 @@
+{
+  "day": "2025-04-09",
+  "revisions": [
+    {
+      "counter_revision": "c1", "route_revision": "r1",
+      "lines": [ ["B", 1], ["A", 1] ],
+      "pools": [ ["Y", 1], ["X", 1] ],
+      "line_roster": ["A", "B"], "pool_roster": ["X", "Y"],
+      "open_routes": [ ["A", "X"], ["A", "Y"], ["B", "X"], ["B", "Y"] ]
+    },
+    {
+      "counter_revision": "c2", "route_revision": "r2",
+      "lines": [ ["A", 2], ["B", 1] ],
+      "pools": [ ["X", 2], ["Y", 1] ],
+      "line_roster": ["A", "B"], "pool_roster": ["X", "Y"],
+      "open_routes": [ ["A", "X"], ["B", "Y"] ]
+    }
+  ],
+  "queries": {
+    "single": [ ["A", "X"] ],
+    "into_x": [ ["A", "X"], ["B", "X"] ],
+    "diagonal": [ ["A", "X"], ["B", "Y"] ]
+  }
+}
