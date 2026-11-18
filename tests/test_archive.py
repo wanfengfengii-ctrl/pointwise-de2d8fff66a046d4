@@ -73,3 +73,24 @@ class ArchiveTests(WarehouseCase):
             read_receipt(reopened, artifact)
         with self.assertRaises(ArchiveConsistencyError):
             bounds(reopened, artifact, [('A', 'X')])
+
+    def test_projection_without_pool_counts_is_unauditable(self):
+        # A payload missing per-endpoint pool counts cannot be reconstructed
+        # into two-side evidence and must fail closed as a consistency error.
+        path = self.use_disk_warehouse()
+        self.register({'A': 1, 'B': 1}, {'X': 1, 'Y': 1}, FULL)
+        artifact = self.seal()
+        self.archive.close()
+        with closing(sqlite3.connect(path)) as editor, editor:
+            editor.execute(
+                'UPDATE artifacts SET payload = ? WHERE artifact_id = ?',
+                ('{"artifact_id": %d, "day": "%s", "counter_revision": "c1", '
+                 '"route_revision": "r1", "lines": [["A", "0x1"], ["B", "0x1"]], '
+                 '"pool_names": ["X", "Y"], "pool_total": "0x2", '
+                 '"route_intervals": []}' % (artifact, DAY), artifact),
+            )
+        reopened = self.database(ArchiveStore, path)
+        with self.assertRaises(ArchiveConsistencyError):
+            get_sealed_batch(reopened, artifact)
+        with self.assertRaises(ArchiveConsistencyError):
+            bounds(reopened, artifact, INTO_X)
